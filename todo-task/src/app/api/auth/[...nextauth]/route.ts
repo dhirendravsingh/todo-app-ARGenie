@@ -14,8 +14,7 @@ export const authOptions = {
           },
           
           async authorize(credentials: any) {
-            // creating a hashedpassword which will be saved in the database safely
-            const hashedPassword = await bcrypt.hash(credentials.password, 10);
+            
             const existingUser = await client.user.findFirst({
                 where: {
                     username: credentials.username
@@ -34,22 +33,7 @@ export const authOptions = {
                 throw new Error("Invalid credentials");
             }
 
-            try {
-                const user = await client.user.create({
-                    data: {
-                        username: credentials.username,
-                        password: hashedPassword,
-                        
-                    }
-                });
             
-                return {
-                    id: user.id.toString(),
-                    username: user.username,
-                }
-            } catch(e) {
-                console.error(e);
-            }
 
             return null
           },
@@ -57,11 +41,10 @@ export const authOptions = {
     ],
     pages: {
         signIn: "/auth/signin",
-        signUp: "/auth/signup",
         
       },
 
-    secret: process.env.JWT_SECRET || "secret",
+    secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         
         async session({ token, session }: any) {
@@ -72,4 +55,5 @@ export const authOptions = {
     }
   }
   const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+export const GET = handler
+export const POST = handler
