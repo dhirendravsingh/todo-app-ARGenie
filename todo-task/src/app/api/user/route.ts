@@ -3,6 +3,7 @@ import bcrypt from "bcrypt"
 
 import {client} from "@/lib/prisma"
 export async function POST(req:any) {
+
   const { username, password } = await req.json();
 
   // creating a hashedpassword which will be saved in the database safely

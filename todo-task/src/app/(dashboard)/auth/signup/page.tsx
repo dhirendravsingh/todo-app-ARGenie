@@ -12,8 +12,8 @@ export default function SignupPage() {
   const handleSignup = async (e : any) => {
     e.preventDefault();
     try {
-      await axios.post('/api/user', { username, password });
-      router.push('/auth/signin');
+      await axios.post('/api/auth', { username, password });
+            router.push('/auth/signin');
     } catch (error) {
       console.error(error);
     }

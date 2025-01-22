@@ -11,14 +11,14 @@ describe("Authentication", ()=>{
         let username = `testUser-${Math.random()}`
         let password = "123456"
 
-        const signUpResponse = await axios.post(`${BACKEND_URL}/api/v1/signup`, {
+        const signUpResponse = await axios.post(`${BACKEND_URL}/api/user`, {
             username,
             password
         })
     
         expect(signUpResponse.status).toBe(200)
 
-        const updatedSignUpResponse = await axios.post(`${BACKEND_URL}/api/v1/signup`, {
+        const updatedSignUpResponse = await axios.post(`${BACKEND_URL}/api/user`, {
             username,
             password
         })
@@ -30,7 +30,7 @@ describe("Authentication", ()=>{
         let username = `testUser-${Math.random()}`
         let password = "123456"
 
-        const signUpResponse = await axios.post(`${BACKEND_URL}/api/v1/signup`, {
+        const signUpResponse = await axios.post(`${BACKEND_URL}/api/user`, {
             password
         })
     
@@ -41,12 +41,12 @@ describe("Authentication", ()=>{
         let username = `testUser-${Math.random()}`
         let password = "123456"
 
-        const signUpResponse = await axios.post(`${BACKEND_URL}/api/v1/signup`, {
+        const signUpResponse = await axios.post(`${BACKEND_URL}/api/user`, {
             username,
             password
         })
 
-        const signInResponse = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
+        const signInResponse = await axios.post(`${BACKEND_URL}/api/auth/signin`, {
             username,
             password
         })
@@ -59,12 +59,12 @@ describe("Authentication", ()=>{
         let username = `testUser-${Math.random()}`
         let password = "123456"
 
-        const signUpResponse = await axios.post(`${BACKEND_URL}/api/v1/signup`, {
+        const signUpResponse = await axios.post(`${BACKEND_URL}/api/user`, {
             username,
             password
         })
 
-        const signInResponse = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
+        const signInResponse = await axios.post(`${BACKEND_URL}/api/auth/signin`, {
             username : "testUser",
             password : "Something wrong"
         })
@@ -80,12 +80,12 @@ describe("Creating a Todo", ()=>{
         let username = `testUser-${Math.random()}`;
         let password = "123456";
 
-        const signUpResponse = await axios.post(`${BACKEND_URL}/api/v1/signup`, {
+        const signUpResponse = await axios.post(`${BACKEND_URL}/api/user`, {
             username,
             password
         })
 
-        const signInResponse = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
+        const signInResponse = await axios.post(`${BACKEND_URL}/api/auth/signin`, {
             username,
             password
         })
@@ -94,7 +94,7 @@ describe("Creating a Todo", ()=>{
     })
 
     test("User is able to create a todo with token",async ()=>{
-        const createTodo = await axios.post(`${BACKEND_URL}/api/v1/user/todo`, {
+        const createTodo = await axios.post(`${BACKEND_URL}/api/user/todo`, {
             title : "Test Todo",
             completed : false
         }, {
@@ -108,7 +108,7 @@ describe("Creating a Todo", ()=>{
     })
 
     test("user is not able to create a todo without token",async ()=>{
-        const createTodo = await axios.post(`${BACKEND_URL}/api/v1/user/todo`, {
+        const createTodo = await axios.post(`${BACKEND_URL}/api/user/todo`, {
             title : "Test Todo",
             completed : false
         })
@@ -126,19 +126,19 @@ describe("Updating a todo", ()=>{
         let username = `testUser-${Math.random()}`;
         let password = "123456";
 
-        const signUpResponse = await axios.post(`${BACKEND_URL}/api/v1/signup`, {
+        const signUpResponse = await axios.post(`${BACKEND_URL}/api/user`, {
             username,
             password
         })
 
-        const signInResponse = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
+        const signInResponse = await axios.post(`${BACKEND_URL}/api/auth/signin`, {
             username,
             password
         })
 
         token = signInResponse.data.token
 
-         const createTodo = await axios.post(`${BACKEND_URL}/api/v1/user/todo`, {
+         const createTodo = await axios.post(`${BACKEND_URL}/api/user/todo`, {
                 title : "Test Todo",
                 completed : false
             }, {
@@ -152,7 +152,7 @@ describe("Updating a todo", ()=>{
 
         
     test("user is able to update the completion of specific todo",async ()=>{
-        const completedToDo = await axios.put(`${BACKEND_URL}/api/v1/user/todo/${todoId}`, {
+        const completedToDo = await axios.put(`${BACKEND_URL}/api/user/todo/${todoId}`, {
             completed : true
         }, {
             headers : {
@@ -164,7 +164,7 @@ describe("Updating a todo", ()=>{
     })
 
     test("user is not able to update the completion without token",async ()=>{
-        const completedToDo = await axios.put(`${BACKEND_URL}/api/v1/user/todo/${todoId}`, {
+        const completedToDo = await axios.put(`${BACKEND_URL}/api/user/todo/${todoId}`, {
             completed : true
         })
 
@@ -172,7 +172,7 @@ describe("Updating a todo", ()=>{
     })
 
     test("User is able to update the title of todo ", async ()=>{
-        const updateToDo = await axios.put(`${BACKEND_URL}/api/v1/user/todo/${todoId}`, {
+        const updateToDo = await axios.put(`${BACKEND_URL}/api/user/todo/${todoId}`, {
             title : "New todo"
         }, {
             headers : {
@@ -183,14 +183,14 @@ describe("Updating a todo", ()=>{
     })  
 
     test("User is not able to update the title without token", async ()=>{
-        const updateToDo = await axios.put(`${BACKEND_URL}/api/v1/user/todo/${todoId}`, {
+        const updateToDo = await axios.put(`${BACKEND_URL}/api/user/todo/${todoId}`, {
             title : "New todo"
         })
         expect(updateToDo.status).toBe(403)
     }) 
 
     test("User cannot update todo with an empty title", async ()=>{
-        const updateToDo = await axios.put(`${BACKEND_URL}/api/v1/user/todo/${todoId}`, {
+        const updateToDo = await axios.put(`${BACKEND_URL}/api/user/todo/${todoId}`, {
             title : ""
         }, {
             headers : {
@@ -210,19 +210,19 @@ describe("Deleting a todo", ()=>{
         let username = `testUser-${Math.random()}`;
         let password = "123456";
 
-        const signUpResponse = await axios.post(`${BACKEND_URL}/api/v1/signup`, {
+        const signUpResponse = await axios.post(`${BACKEND_URL}/api/user`, {
             username,
             password
         })
 
-        const signInResponse = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
+        const signInResponse = await axios.post(`${BACKEND_URL}/api/auth/signin`, {
             username,
             password
         })
 
         token = signInResponse.data.token
 
-         const createTodo = await axios.post(`${BACKEND_URL}/api/v1/user/todo`, {
+         const createTodo = await axios.post(`${BACKEND_URL}/api/user/todo`, {
                 title : "Test Todo",
                 completed : false
             }, {
@@ -235,7 +235,7 @@ describe("Deleting a todo", ()=>{
         })
 
     test("User is able to delete a todo with token", async ()=>{
-        const deleteResponse = await  axios.delete(`${BACKEND_URL}/api/v1/user/todo/${todoId}`, {
+        const deleteResponse = await  axios.delete(`${BACKEND_URL}/api/user/todo/${todoId}`, {
             headers : {
                 authorization : `Bearer ${token}`
             }
@@ -245,7 +245,7 @@ describe("Deleting a todo", ()=>{
     })
 
     test("User is not able to delete a todo without token", async ()=>{
-        const deleteResponse = await axios.delete(`${BACKEND_URL}/api/v1/user/todo/${todoId}`)
+        const deleteResponse = await axios.delete(`${BACKEND_URL}/api/user/todo/${todoId}`)
 
         expect(deleteResponse.status).toBe(403)
     })
